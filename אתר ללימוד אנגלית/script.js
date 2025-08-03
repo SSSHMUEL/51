@@ -1,23 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // אלמנטים שמשמשים לשמירת מצב המשתמש
-    const userStats = {
-        dailyGoal: 0,
-        totalDailyGoal: 10,
-        streakDays: 1,
-        wordsLearnedCount: 0,
-        totalPoints: 0,
-        learnedWords: []
-    };
+    // שלב 1: הגדרת מפתחות Supabase
+    // המפתחות שהכנסת:
+    const SUPABASE_URL = 'https://jragfudubmyzbbqyqzbi.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYWdmdWR1Ym15emJieXF3enpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyNTY5NzMsImV4cCI6MjA2OTgzMjk3M30.CmwVzAthV0aiPfhzf93yOQhebYbkvuZdBD8lG2xx5ps';
     
-    // כל המילים ללמידה - הועברו ישירות לקוד ה-JavaScript
-    const allWords = [
-        { id: 'w1', word: 'house', translation: 'בית', pronunciation: '/haʊs/', example: 'I live in a big house.' },
-        { id: 'w2', word: 'car', translation: 'מכונית', pronunciation: '/kɑːr/', example: 'I drive a red car.' },
-        { id: 'w3', word: 'tree', translation: 'עץ', pronunciation: '/triː/', example: 'There is a tall tree in the park.' },
-    ];
+    // אתחול לקוח Supabase
+    const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // אלמנטים שאנחנו מושכים מה-HTML
-    const mainContentArea = document.getElementById('mainContentArea');
     const mainTitle = document.getElementById('mainTitle');
     const mainSubtitle = document.getElementById('mainSubtitle');
 
@@ -25,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedOutContent = document.getElementById('loggedOutContent');
 
     const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
     const logoutBtn = document.getElementById('logoutBtn');
 
     const userNameElement = document.getElementById('userName');
@@ -33,12 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const actionButtons = document.querySelectorAll('.action-button');
     const loggedOutActions = document.querySelector('.logged-out-actions');
 
-    // פונקציה לעדכון הממשק
-    const updateUI = (user) => {
+    // פונקציה לעדכון הממשק בהתאם למצב המשתמש
+    const updateUI = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+
         if (user) {
             // משתמש מחובר
             if (userNameElement) {
-                userNameElement.textContent = user.user_metadata.full_name || user.email.split('@')[0];
+                const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+                userNameElement.textContent = userName;
             }
             if (mainTitle && userNameElement) {
                 mainTitle.innerHTML = `שלום, <span id="userName">${userNameElement.textContent}</span>!`;
@@ -54,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (loginBtn) {
                 loginBtn.style.display = 'none';
+            }
+            if (signupBtn) {
+                signupBtn.style.display = 'none';
             }
             if (logoutBtn) {
                 logoutBtn.style.display = 'block';
@@ -78,52 +75,97 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loginBtn) {
                 loginBtn.style.display = 'block';
             }
+            if (signupBtn) {
+                signupBtn.style.display = 'block';
+            }
             if (logoutBtn) {
                 logoutBtn.style.display = 'none';
             }
         }
     };
-    
-    // בודק אם Netlify Identity זמין בדף
-    if (window.netlifyIdentity) {
-        const user = window.netlifyIdentity.currentUser();
-        updateUI(user);
 
-        window.netlifyIdentity.on('login', user => {
-            updateUI(user);
+    // פונקציה לטיפול בהתחברות
+    const handleLogin = async () => {
+        const email = prompt("הכנס אימייל:");
+        const password = prompt("הכנס סיסמה:");
+
+        if (!email || !password) return;
+
+        const { error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
         });
 
-        window.netlifyIdentity.on('logout', () => {
-            updateUI(null);
-        });
-
-        if (loginBtn) {
-            loginBtn.addEventListener('click', () => {
-                window.netlifyIdentity.open();
-            });
+        if (error) {
+            console.error('Login failed:', error.message);
+            alert(`התחברות נכשלה: ${error.message}`);
+        } else {
+            updateUI();
         }
+    };
+
+    // פונקציה לטיפול בהרשמה
+    const handleSignup = async () => {
+        const email = prompt("הכנס אימייל להרשמה:");
+        const password = prompt("הכנס סיסמה (6 תווים לפחות):");
+
+        if (!email || !password) return;
         
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                window.netlifyIdentity.logout();
-            });
-        }
+        const { error } = await supabase.auth.signUp({
+            email,
+            password,
+        });
 
-        if (loggedOutActions) {
-            loggedOutActions.addEventListener('click', (event) => {
-                if (event.target.dataset.action === 'login') {
-                    window.netlifyIdentity.open('login');
-                } else if (event.target.dataset.action === 'signup') {
-                    window.netlifyIdentity.open('signup');
-                }
-            });
+        if (error) {
+            console.error('Signup failed:', error.message);
+            alert(`הרשמה נכשלה: ${error.message}`);
+        } else {
+            alert('הרשמה בוצעה בהצלחה! יש לאשר את האימייל.');
         }
+    };
+    
+    // פונקציה לטיפול בהתנתקות
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Logout failed:', error.message);
+        } else {
+            updateUI();
+        }
+    };
+
+    // אירועי לחיצה על הכפתורים
+    if (loginBtn) {
+        loginBtn.addEventListener('click', handleLogin);
+    }
+    if (signupBtn) {
+        signupBtn.addEventListener('click', handleSignup);
+    }
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
     }
 
+    if (loggedOutActions) {
+        loggedOutActions.addEventListener('click', (event) => {
+            if (event.target.dataset.action === 'login') {
+                handleLogin();
+            } else if (event.target.dataset.action === 'signup') {
+                handleSignup();
+            }
+        });
+    }
+
+    // מאזין לאירועים של שינוי מצב אימות המשתמש
+    supabase.auth.onAuthStateChange((event, session) => {
+      updateUI();
+    });
+    
+    // פונקציית ניווט עמודים
     function loadPage(pageName) {
         console.log(`נווט לעמוד: ${pageName}`);
     }
 
+    // לוגיקת הניווט
     if (navLinks) {
         navLinks.forEach(link => {
             link.addEventListener('click', (event) => {
@@ -136,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // לוגיקת כפתורי הפעולה
     if (actionButtons) {
         actionButtons.forEach(button => {
             button.addEventListener('click', (event) => {
@@ -143,4 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    
+    // עדכון ראשוני של הממשק
+    updateUI();
 });
