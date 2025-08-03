@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // שלב 1: הגדרת מפתחות Supabase
-    // המפתחות שהכנסת:
     const SUPABASE_URL = 'https://jragfudubmyzbbqyqzbi.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYWdmdWR1Ym15emJieXF3enpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyNTY5NzMsImV4cCI6MjA2OTgzMjk3M30.CmwVzAthV0aiPfhzf93yOQhebYbkvuZdBD8lG2xx5ps';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYWdmdWR1Ym15emJieXF3enbiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc1NDI1NjkyOSwiZXhwIjoyMDY5ODMyOTI5fQ.CmwVzAthV0aiPfhzf93yOQhebYbkvuZdBD8lG2xx5ps';
     
     // אתחול לקוח Supabase
     const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -10,16 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // אלמנטים שאנחנו מושכים מה-HTML
     const mainTitle = document.getElementById('mainTitle');
     const mainSubtitle = document.getElementById('mainSubtitle');
-
     const loggedInContent = document.getElementById('loggedInContent');
     const loggedOutContent = document.getElementById('loggedOutContent');
-
     const loginBtn = document.getElementById('loginBtn');
     const signupBtn = document.getElementById('signupBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-
     const userNameElement = document.getElementById('userName');
-
     const navLinks = document.querySelectorAll('.main-nav a');
     const actionButtons = document.querySelectorAll('.action-button');
     const loggedOutActions = document.querySelector('.logged-out-actions');
@@ -88,14 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleLogin = async () => {
         const email = prompt("הכנס אימייל:");
         const password = prompt("הכנס סיסמה:");
-
         if (!email || !password) return;
-
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
             console.error('Login failed:', error.message);
             alert(`התחברות נכשלה: ${error.message}`);
@@ -108,14 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleSignup = async () => {
         const email = prompt("הכנס אימייל להרשמה:");
         const password = prompt("הכנס סיסמה (6 תווים לפחות):");
-
         if (!email || !password) return;
-        
-        const { error } = await supabase.auth.signUp({
-            email,
-            password,
-        });
-
+        const { error } = await supabase.auth.signUp({ email, password });
         if (error) {
             console.error('Signup failed:', error.message);
             alert(`הרשמה נכשלה: ${error.message}`);
