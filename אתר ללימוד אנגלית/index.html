@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>לינגו-מאסטר | ברוך שובך!</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -34,8 +33,9 @@
                     <p id="mainSubtitle">בוא נתחיל ללמוד משהו חדש היום.</p>
                 </div>
                 <div class="user-actions">
-                    <button class="auth-button" id="loginBtn">התחבר</button>
-                    <button class="auth-button" id="signupBtn">הירשם</button>
+                    <button class="auth-button" id="netlify-identity-toggle">
+                        <span id="auth-status-text">התחבר / הירשם</span>
+                    </button>
                     <button class="auth-button" id="logoutBtn" style="display:none;">התנתק</button>
                 </div>
             </header>
@@ -100,7 +100,7 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
