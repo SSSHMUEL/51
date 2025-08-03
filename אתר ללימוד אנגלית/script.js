@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // שלב 1: הגדרת מפתחות Supabase
-    // אלה מפתחות הדוגמה הכלליים של Supabase.
-    // אם יש לך פרויקט משלך, החלף אותם במפתחות שלך.
+    // אנא וודא שהמפתחות כאן זהים למפתחות שקיבלת מהפרויקט שלך ב-Supabase
     const SUPABASE_URL = 'https://jragfudubmyzbbqyqzbi.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYWdmdWR1Ym15emJieXF3enbiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc1NDI1NjkyOSwiZXhwIjoyMDY5ODMyOTI5fQ.CmwVzAthV0aiPfhzf93yOQhebYbkvuZdBD8lG2xx5ps';
     
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (user) {
             // משתמש מחובר
-            const userName = user.user_metadata?.full_name || user.email.split('@')[0];
+            const userName = (user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name : user.email.split('@')[0];
             if (userNameElement) {
                 userNameElement.textContent = userName;
             }
