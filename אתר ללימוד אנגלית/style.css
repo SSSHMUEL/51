@@ -1,0 +1,559 @@
+/* כללי - (ללא שינוי, העתק והדבק את כולו מהקוד הקודם) */
+:root {
+    --primary-blue: #007bff;
+    --secondary-gray: #f0f2f5;
+    --dark-text: #333;
+    --light-text: #666;
+    --white: #fff;
+    --border-color: #ddd;
+    --accent-orange: #ff9900;
+    --accent-green: #28a745;
+    --sidebar-width: 250px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    direction: rtl;
+    text-align: right;
+    background-color: var(--secondary-gray);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar - (ללא שינוי, העתק והדבק את כולו מהקוד הקודם) */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--white);
+    border-left: 1px solid var(--border-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.sidebar .logo h2 {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 5px;
+}
+
+.sidebar .logo p {
+    font-size: 0.8rem;
+    color: var(--light-text);
+}
+
+.sidebar nav {
+    margin-bottom: 30px;
+}
+
+.sidebar nav h3 {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 10px;
+    padding-right: 10px;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 5px;
+}
+
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--dark-text);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar nav ul li a i {
+    margin-left: 10px;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li.active a {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+
+.sidebar nav ul li.active a i {
+    color: var(--white);
+}
+
+.sidebar nav ul li .new-feature {
+    background-color: var(--accent-orange);
+    color: var(--white);
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+.progress-summary {
+    margin-top: auto;
+    margin-bottom: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.progress-summary h3 {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 10px;
+    padding-right: 10px;
+}
+
+.progress-summary .progress-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px;
+    background-color: var(--secondary-gray);
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.progress-summary .progress-item i {
+    color: var(--primary-blue);
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.progress-summary .progress-item span {
+    flex-grow: 1;
+    font-size: 0.9rem;
+}
+
+.progress-summary .progress-item .value {
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--secondary-gray);
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.user-info .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-left: 15px;
+}
+
+.user-info h4 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--dark-text);
+}
+
+.user-info p {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    margin: 0;
+}
+
+
+/* Main Content Wrapper */
+.main-content-wrapper {
+    flex-grow: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Content - עכשיו זה רק המכולה לתוכן המשתנה */
+.main-content {
+    flex-grow: 1;
+    display: flex; /* כדי שהתוכן בתוכו יתפוס מקום נכון */
+    flex-direction: column;
+}
+
+
+.main-header {
+    margin-bottom: 40px;
+}
+
+.main-header h1 {
+    font-size: 2.2rem;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+.main-header p {
+    font-size: 1rem;
+    color: var(--light-text);
+}
+
+/* Dashboard Specific Styles - (ללא שינוי, העתק והדבק את כולו מהקוד הקודם) */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card i {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2.5rem;
+    color: rgba(0, 123, 255, 0.1);
+    z-index: 0;
+}
+
+.stat-card.streak i {
+    color: rgba(255, 153, 0, 0.1);
+}
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 5px;
+    z-index: 1;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--dark-text);
+    margin-bottom: 5px;
+    z-index: 1;
+}
+
+.stat-card.streak .stat-value {
+    color: var(--accent-orange);
+}
+
+.stat-card span {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    z-index: 1;
+}
+
+.action-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.action-card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card i {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 3rem;
+    color: rgba(0, 123, 255, 0.1);
+    z-index: 0;
+}
+
+.action-card.practice-review i {
+    color: rgba(0, 128, 0, 0.1);
+}
+
+.action-card h3 {
+    font-size: 1.4rem;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+    z-index: 1;
+}
+
+.action-card p {
+    font-size: 0.95rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    z-index: 1;
+}
+
+.action-button {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    z-index: 1;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.action-button i {
+    font-size: 0.9rem;
+    margin-right: 10px;
+    position: static;
+    color: var(--white);
+}
+
+/* Page Specific Styles - (ללא שינוי, העתק והדבק את כולו מהקוד הקודם) */
+.page-content {
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* Learn Page Styles */
+.word-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px; /* רווח מהכותרת הראשית */
+}
+
+.word-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.word-card h4 {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 5px;
+}
+
+.word-card p {
+    font-size: 1rem;
+    color: var(--dark-text);
+    margin-bottom: 15px;
+}
+
+.word-card .pronunciation {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    direction: ltr; /* כיוון שמאל-ימין עבור ההגייה הלטינית */
+    text-align: left; /* יישור טקסט לשמאל עבור ההגייה */
+}
+
+.word-card .pronunciation i {
+    margin-right: 10px;
+    margin-left: 0;
+    color: var(--primary-blue);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.word-card .example {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 15px;
+    direction: ltr;
+    text-align: left;
+    border-top: 1px solid var(--secondary-gray);
+    padding-top: 10px;
+    width: 100%;
+}
+
+.word-card .mark-learned-btn {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+.word-card .mark-learned-btn:hover {
+    background-color: #0056b3;
+}
+
+.word-card.learned {
+    border-color: var(--accent-green);
+    background-color: #e6ffe6;
+}
+
+.word-card.learned .mark-learned-btn {
+    background-color: var(--accent-green);
+    cursor: default;
+    opacity: 0.8;
+}
+
+.word-card.learned .mark-learned-btn:hover {
+    background-color: var(--accent-green);
+}
+
+/* Download Page Styles */
+.download-section {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-top: 30px; /* רווח מהכותרת הראשית */
+    text-align: center;
+}
+
+.download-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.download-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.download-item {
+    flex: 0 0 calc(33% - 20px);
+    max-width: 300px;
+    background-color: var(--secondary-gray);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.download-item i {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+.download-item h3 {
+    font-size: 1.3rem;
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+.download-item p {
+    font-size: 0.9rem;
+    color: var(--light-text);
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.download-item .download-soon-btn {
+    background-color: var(--light-text);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: not-allowed;
+    opacity: 0.7;
+    margin-top: auto;
+}
+
+/* רספונסיביות נוספת - (ללא שינוי, העתק והדבק את כולו מהקוד הקודם) */
+@media (max-width: 1024px) {
+    .download-item {
+        flex: 0 0 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .download-section {
+        padding: 20px;
+    }
+    .download-item {
+        flex: 0 0 90%;
+        max-width: unset;
+    }
+}
+@media (max-width: 480px) {
+    /* הוסף כאן סגנונות רספונסיביים קודמים לדאשבורד אם הוסרו בטעות */
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+    .main-header h1 {
+        font-size: 1.8rem;
+    }
+    .action-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
