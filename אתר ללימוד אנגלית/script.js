@@ -1,35 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // אלמנטים קיימים מהקוד שלך
     const mainContentArea = document.getElementById('mainContentArea');
     const mainTitle = document.getElementById('mainTitle');
     const mainSubtitle = document.getElementById('mainSubtitle');
-    const dashboardStatsSection = document.getElementById('dashboardStatsSection');
-    const actionCardsSection = document.getElementById('actionCardsSection');
-    
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+
     const loggedInContent = document.getElementById('loggedInContent');
     const loggedOutContent = document.getElementById('loggedOutContent');
+
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
     const userNameElement = document.getElementById('userName');
 
+    // פונקציה לעדכון הממשק
     const updateUI = (user) => {
         if (user) {
-            userNameElement.textContent = user.user_metadata.full_name || user.email.split('@')[0];
-            mainTitle.innerHTML = `שלום, <span id="userName">${userNameElement.textContent}</span>!`;
-            mainSubtitle.textContent = 'בוא נתחיל ללמוד משהו חדש היום.';
-            loggedInContent.style.display = 'block';
-            loggedOutContent.style.display = 'none';
-            loginBtn.style.display = 'none';
-            logoutBtn.style.display = 'block';
+            // משתמש מחובר
+            if (userNameElement) {
+                userNameElement.textContent = user.user_metadata.full_name || user.email.split('@')[0];
+            }
+            if (mainTitle) {
+                mainTitle.innerHTML = `שלום, <span id="userName">${userNameElement.textContent}</span>!`;
+            }
+            if (mainSubtitle) {
+                mainSubtitle.textContent = 'בוא נתחיל ללמוד משהו חדש היום.';
+            }
+            if (loggedInContent) {
+                loggedInContent.style.display = 'block';
+            }
+            if (loggedOutContent) {
+                loggedOutContent.style.display = 'none';
+            }
+            if (loginBtn) {
+                loginBtn.style.display = 'none';
+            }
+            if (logoutBtn) {
+                logoutBtn.style.display = 'block';
+            }
         } else {
-            mainTitle.innerHTML = `שלום, <span id="userName">אורח</span>!`;
-            mainSubtitle.textContent = 'התחבר כדי לשמור את ההתקדמות שלך.';
-            loggedInContent.style.display = 'none';
-            loggedOutContent.style.display = 'block';
-            loginBtn.style.display = 'block';
-            logoutBtn.style.display = 'none';
+            // משתמש לא מחובר
+            if (userNameElement) {
+                userNameElement.textContent = 'אורח';
+            }
+            if (mainTitle) {
+                mainTitle.innerHTML = `שלום, <span id="userName">אורח</span>!`;
+            }
+            if (mainSubtitle) {
+                mainSubtitle.textContent = 'התחבר כדי לשמור את ההתקדמות שלך.';
+            }
+            if (loggedInContent) {
+                loggedInContent.style.display = 'none';
+            }
+            if (loggedOutContent) {
+                loggedOutContent.style.display = 'block';
+            }
+            if (loginBtn) {
+                loginBtn.style.display = 'block';
+            }
+            if (logoutBtn) {
+                logoutBtn.style.display = 'none';
+            }
         }
     };
     
+    // בודק אם Netlify Identity זמין בדף
     if (window.netlifyIdentity) {
         const user = window.netlifyIdentity.currentUser();
         updateUI(user);
@@ -42,27 +76,33 @@ document.addEventListener('DOMContentLoaded', () => {
             updateUI(null);
         });
 
-        loginBtn.addEventListener('click', () => {
-            window.netlifyIdentity.open();
-        });
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                window.netlifyIdentity.open();
+            });
+        }
         
-        logoutBtn.addEventListener('click', () => {
-            window.netlifyIdentity.logout();
-        });
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                window.netlifyIdentity.logout();
+            });
+        }
 
-        document.querySelector('.logged-out-actions').addEventListener('click', (event) => {
-            if (event.target.dataset.action === 'login') {
-                window.netlifyIdentity.open('login');
-            } else if (event.target.dataset.action === 'signup') {
-                window.netlifyIdentity.open('signup');
-            }
-        });
+        const loggedOutActions = document.querySelector('.logged-out-actions');
+        if (loggedOutActions) {
+            loggedOutActions.addEventListener('click', (event) => {
+                if (event.target.dataset.action === 'login') {
+                    window.netlifyIdentity.open('login');
+                } else if (event.target.dataset.action === 'signup') {
+                    window.netlifyIdentity.open('signup');
+                }
+            });
+        }
     }
 
+    // פונקציה לטיפול בניווט (נותרה ללא שינוי, היא תקינה)
     function loadPage(pageName) {
         console.log(`נווט לעמוד: ${pageName}`);
-        
-        // כאן תוכל להוסיף לוגיקה שתטען תוכן שונה לכל עמוד
     }
 
     const navLinks = document.querySelectorAll('.main-nav a');
