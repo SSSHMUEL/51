@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // שלב 1: הגדרת מפתחות Supabase
+    // אלה מפתחות הדוגמה הכלליים של Supabase.
+    // אם יש לך פרויקט משלך, החלף אותם במפתחות שלך.
     const SUPABASE_URL = 'https://jragfudubmyzbbqyqzbi.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYWdmdWR1Ym15emJieXF3enbiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc1NDI1NjkyOSwiZXhwIjoyMDY5ODMyOTI5fQ.CmwVzAthV0aiPfhzf93yOQhebYbkvuZdBD8lG2xx5ps';
     
