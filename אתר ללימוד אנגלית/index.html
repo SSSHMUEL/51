@@ -22,64 +22,42 @@
                     <li><a href="#" data-page="learn"><i class="fas fa-book-open"></i> ללמוד</a></li>
                     <li><a href="#" data-page="practice"><i class="fas fa-dumbbell"></i> לתרגל</a></li>
                     <li><a href="#" data-page="review"><i class="fas fa-redo"></i> תרגול חוזר</a></li>
-                    <li><a href="#" data-page="vocabulary"><i class="fas fa-box"></i> אוצר מילים</a></li>
-                    <li><a href="#" data-page="profile"><i class="fas fa-user"></i> פרופיל</a></li>
-                    <li><a href="#" data-page="download"><i class="fas fa-download"></i> <span class="new-feature">חדש!</span> להורדה</a></li>
+                    <li><a href="#" data-page="history"><i class="fas fa-history"></i> היסטוריה</a></li>
                 </ul>
             </nav>
-            <nav class="admin-nav">
-                <h3>מנהל</h3>
-                <ul>
-                    <li><a href="#" data-page="admin-dashboard"><i class="fas fa-cogs"></i> לוח בקרה של מנהל</a></li>
-                    <li><a href="#" data-page="manage-users"><i class="fas fa-users"></i> ניהול משתמשים</a></li>
-                </ul>
-            </nav>
-            <div class="progress-summary">
-                <h3>התקדמות</h3>
-                <div class="progress-item">
-                    <i class="fas fa-calendar-day"></i>
-                    <span>ימים אחד</span>
-                    <span class="value" id="streakDaysValue">0</span>
-                </div>
-                <div class="progress-item">
-                    <i class="fas fa-star"></i>
-                    <span>נקודות</span>
-                    <span class="value" id="pointsValue">10</span>
-                </div>
-            </div>
-            <div class="user-info">
-                <div class="user-avatar">ש</div>
-                <div>
-                    <h4>שמואל תמקסון</h4>
-                    <p>סטודנט</p>
-                </div>
-            </div>
         </aside>
 
-        <div class="main-content-wrapper"> <header class="main-header">
-                <h1 id="mainTitle">שמואל, ברוך שובך! 👋</h1>
-                <p id="mainSubtitle">בוא/י ונתקדם היום קצת.</p>
+        <div class="main-content" id="mainContentArea">
+            <header class="main-header">
+                <div>
+                    <h1 id="mainTitle">ברוך שובך, <span id="userName">אורח</span>!</h1>
+                    <p id="mainSubtitle">בוא נתחיל ללמוד משהו חדש היום.</p>
+                </div>
+                <div class="user-actions">
+                    <button class="auth-button" id="loginBtn">התחבר / הירשם</button>
+                    <button class="auth-button" id="logoutBtn" style="display:none;">התנתק</button>
+                </div>
             </header>
 
-            <main class="main-content" id="mainContentArea">
+            <div id="loggedInContent" style="display:none;">
                 <section class="dashboard-stats" id="dashboardStatsSection">
                     <div class="stat-card">
-                        <i class="fas fa-exclamation"></i>
+                        <i class="fas fa-running"></i>
                         <h3>יעד יומי</h3>
-                        <p class="stat-value" id="dailyGoal">0 / 10</p>
-                        <span>מילים חדשות</span>
+                        <p class="stat-value"><span id="dailyGoal">0</span>/<span id="totalDailyGoal">10</span></p>
+                        <span>מילים חדשות שנלמדו</span>
                     </div>
-                    <div class="stat-card streak">
+                    <div class="stat-card">
                         <i class="fas fa-fire"></i>
                         <h3>רצף נוכחי</h3>
-                        <p class="stat-value" id="currentStreak">יום אחד</p>
-                        <span>התמיד בכך!</span>
+                        <p class="stat-value"><span id="currentStreak">1</span></p>
+                        <span>ימים רצופים של למידה</span>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-book"></i>
                         <h3>מילים שנלמדו</h3>
-                        <p class="stat-value" id="wordsLearned">8</p>
-                        <span>בסך הכל</span>
+                        <p class="stat-value" id="wordsLearned">55</p>
+                        <span>מילים בסך הכל</span>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-trophy"></i>
@@ -107,9 +85,21 @@
                         </button>
                     </div>
                 </section>
-            </main>
-        </div> </div>
+            </div>
 
+            <div id="loggedOutContent" class="logged-out-message" style="display:none;">
+                <i class="fas fa-lock"></i>
+                <h2>התחבר כדי להתחיל ללמוד</h2>
+                <p>התחבר או צור חשבון חדש כדי לשמור את ההתקדמות שלך ולנהל את הלימודים.</p>
+                <div class="logged-out-actions">
+                    <button class="auth-button main-auth-btn" data-action="login">התחבר</button>
+                    <button class="auth-button main-auth-btn" data-action="signup">הירשם</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
