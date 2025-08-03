@@ -70,20 +70,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // פונקציית loadPage שחסרה לך
+    function loadPage(pageName) {
+        // בנתיים, היא רק תדפיס הודעה לקונסול
+        console.log(`נווט לעמוד: ${pageName}`);
+        
+        // כאן תוכל להוסיף לוגיקה שתטען תוכן שונה לכל עמוד.
+        // לדוגמה, אתה יכול להסתיר ולהציג אלמנטים מסוימים.
+        // מכיוון שבאתר שלך יש רק את עמוד הבית כרגע, היא יכולה להיות פשוטה.
+    }
+
     // קוד ניווט עמודים מהקוד הקיים שלך
     const navLinks = document.querySelectorAll('.main-nav a');
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault(); // מונע ניווט לדף אחר
-            // כאן תוכל להוסיף לוגיקה שתטפל במעבר בין העמודים באמצעות JavaScript
-            console.log(`נווט לעמוד: ${event.target.dataset.page}`);
+            // הפונקציה loadPage קוראת עכשיו
+            loadPage(event.currentTarget.dataset.page);
+            
+            // עדכון ה-Active Link
+            navLinks.forEach(navLink => navLink.parentElement.classList.remove('active'));
+            event.currentTarget.parentElement.classList.add('active');
         });
     });
 
     const actionButtons = document.querySelectorAll('.action-button');
     actionButtons.forEach(button => {
         button.addEventListener('click', (event) => {
-            console.log(`התחיל פעולה: ${event.target.dataset.action}`);
+            console.log(`התחיל פעולה: ${event.currentTarget.dataset.action}`);
         });
     });
 });
