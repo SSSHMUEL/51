@@ -1,5 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // אלמנטים קיימים מהקוד שלך
+    // אלמנטים שמשמשים לשמירת מצב המשתמש
+    const userStats = {
+        dailyGoal: 0,
+        totalDailyGoal: 10,
+        streakDays: 1,
+        wordsLearnedCount: 0,
+        totalPoints: 0,
+        learnedWords: []
+    };
+    
+    // כל המילים ללמידה - הועברו ישירות לקוד ה-JavaScript
+    const allWords = [
+        { id: 'w1', word: 'house', translation: 'בית', pronunciation: '/haʊs/', example: 'I live in a big house.' },
+        { id: 'w2', word: 'car', translation: 'מכונית', pronunciation: '/kɑːr/', example: 'I drive a red car.' },
+        { id: 'w3', word: 'tree', translation: 'עץ', pronunciation: '/triː/', example: 'There is a tall tree in the park.' },
+    ];
+
+    // אלמנטים שאנחנו מושכים מה-HTML
     const mainContentArea = document.getElementById('mainContentArea');
     const mainTitle = document.getElementById('mainTitle');
     const mainSubtitle = document.getElementById('mainSubtitle');
@@ -12,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const userNameElement = document.getElementById('userName');
 
+    const navLinks = document.querySelectorAll('.main-nav a');
+    const actionButtons = document.querySelectorAll('.action-button');
+    const loggedOutActions = document.querySelector('.logged-out-actions');
+
     // פונקציה לעדכון הממשק
     const updateUI = (user) => {
         if (user) {
@@ -19,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (userNameElement) {
                 userNameElement.textContent = user.user_metadata.full_name || user.email.split('@')[0];
             }
-            if (mainTitle) {
+            if (mainTitle && userNameElement) {
                 mainTitle.innerHTML = `שלום, <span id="userName">${userNameElement.textContent}</span>!`;
             }
             if (mainSubtitle) {
@@ -88,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const loggedOutActions = document.querySelector('.logged-out-actions');
         if (loggedOutActions) {
             loggedOutActions.addEventListener('click', (event) => {
                 if (event.target.dataset.action === 'login') {
@@ -100,26 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // פונקציה לטיפול בניווט (נותרה ללא שינוי, היא תקינה)
     function loadPage(pageName) {
         console.log(`נווט לעמוד: ${pageName}`);
     }
 
-    const navLinks = document.querySelectorAll('.main-nav a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault();
-            loadPage(event.currentTarget.dataset.page);
-            
-            navLinks.forEach(navLink => navLink.parentElement.classList.remove('active'));
-            event.currentTarget.parentElement.classList.add('active');
+    if (navLinks) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                loadPage(event.currentTarget.dataset.page);
+                
+                navLinks.forEach(navLink => navLink.parentElement.classList.remove('active'));
+                event.currentTarget.parentElement.classList.add('active');
+            });
         });
-    });
+    }
 
-    const actionButtons = document.querySelectorAll('.action-button');
-    actionButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            console.log(`התחיל פעולה: ${event.currentTarget.dataset.action}`);
+    if (actionButtons) {
+        actionButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                console.log(`התחיל פעולה: ${event.currentTarget.dataset.action}`);
+            });
         });
-    });
+    }
 });
