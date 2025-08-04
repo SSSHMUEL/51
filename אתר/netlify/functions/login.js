@@ -1,5 +1,12 @@
+const faunadb = require('faunadb');
+const q = faunadb.query;
 const bcrypt = require('bcryptjs');
-const { client, q, jwt, JWT_SECRET } = require('../utils');
+const jwt = require('jsonwebtoken');
+
+const FAUNA_SECRET = process.env.FAUNA_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const client = new faunadb.Client({ secret: FAUNA_SECRET });
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
