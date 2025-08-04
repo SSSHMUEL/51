@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    text-align: right;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+main {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+#auth-section .form-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.numbers-manager form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.numbers-manager form input {
+    flex-grow: 1;
+}
+
+#logout-button {
+    width: auto;
+    background-color: #d9534f;
+}
+
+#logout-button:hover {
+    background-color: #c9302c;
+}
+
+#numbers-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#numbers-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.messages {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 5px;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.messages.show {
+    opacity: 1;
+}

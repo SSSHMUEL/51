@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שומר המספרים שלי</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>ברוכים הבאים לשומר המספרים!</h1>
+    </header>
+
+    <main>
+        <section id="auth-section">
+            <h2>הרשמה / התחברות</h2>
+            <p>הרשם כדי להתחיל לשמור את המספרים שלך, או התחבר לחשבון קיים.</p>
+            <div class="form-container">
+                <h3>הרשמה</h3>
+                <form id="register-form">
+                    <input type="email" id="reg-email" placeholder="אימייל" required>
+                    <input type="password" id="reg-password" placeholder="סיסמה" required>
+                    <button type="submit">הרשם</button>
+                </form>
+            </div>
+            <div class="form-container">
+                <h3>התחברות</h3>
+                <form id="login-form">
+                    <input type="email" id="log-email" placeholder="אימייל" required>
+                    <input type="password" id="log-password" placeholder="סיסמה" required>
+                    <button type="submit">התחבר</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="app-section" style="display:none;">
+            <div class="user-info">
+                <h2>שלום, <span id="user-email"></span>!</h2>
+                <button id="logout-button">התנתק</button>
+            </div>
+            
+            <div class="numbers-manager">
+                <h3>שמור מספר חדש</h3>
+                <form id="save-number-form">
+                    <input type="number" id="new-number" placeholder="הכנס מספר" required>
+                    <button type="submit">שמור</button>
+                </form>
+
+                <h3>המספרים השמורים שלך</h3>
+                <ul id="numbers-list">
+                    </ul>
+            </div>
+        </section>
+    </main>
+
+    <div id="messages" class="messages"></div>
+    <script src="script.js"></script>
+</body>
+</html>
