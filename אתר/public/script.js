@@ -36,21 +36,30 @@ async function callNetlifyFunction(name, method, body = null, auth = true) {
         } else {
             showMessage('Session expired, please log in again.');
             updateUI(false);
-            return { error: 'No token' };
+            return null;
         }
     }
 
-    const options = {
-        method: method,
-        headers: headers,
-    };
+    try {
+        const options = {
+            method: method,
+            headers: headers,
+        };
+        if (body) {
+            options.body = JSON.stringify(body);
+        }
 
-    if (body) {
-        options.body = JSON.stringify(body);
+        const response = await fetch(`/.netlify/functions/${name}`, options);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'שגיאה כללית בפונקציה.');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Error calling function ${name}:`, error);
+        showMessage(`שגיאה: ${error.message}`);
+        return null;
     }
-
-    const response = await fetch(`/.netlify/functions/${name}`, options);
-    return response.json();
 }
 
 async function updateUI(isLoggedIn, email = null) {
@@ -92,14 +101,11 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     e.preventDefault();
     const email = document.getElementById('reg-email').value;
     const password = document.getElementById('reg-password').value;
-
     const result = await callNetlifyFunction('register', 'POST', { email, password }, false);
     if (result && result.token) {
         setAuthToken(result.token);
         showMessage('נרשמת בהצלחה!');
-        updateUI(true, email);
-    } else {
-        showMessage(result.message || 'שגיאה בהרשמה.');
+        updateUI(true, result.email);
     }
 });
 
@@ -107,14 +113,11 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('log-email').value;
     const password = document.getElementById('log-password').value;
-
     const result = await callNetlifyFunction('login', 'POST', { email, password }, false);
     if (result && result.token && result.email) {
         setAuthToken(result.token);
         showMessage('התחברת בהצלחה!');
         updateUI(true, result.email);
-    } else {
-        showMessage(result.message || 'שגיאה בהתחברות.');
     }
 });
 
@@ -125,14 +128,11 @@ document.getElementById('save-number-form').addEventListener('submit', async (e)
         showMessage('אנא הכנס מספר חוקי.');
         return;
     }
-
     const result = await callNetlifyFunction('saveNumber', 'POST', { number });
     if (result && result.success) {
         showMessage('המספר נשמר בהצלחה!');
         document.getElementById('new-number').value = '';
         fetchAndDisplayNumbers();
-    } else {
-        showMessage(result.message || 'שגיאה בשמירת המספר.');
     }
 });
 
@@ -146,7 +146,7 @@ document.getElementById('logout-button').addEventListener('click', () => {
 (async () => {
     const token = getAuthToken();
     if (token) {
-        const result = await callNetlifyFunction('verifyToken', 'GET');
+        const result = await callNetlifyFunction('login', 'POST', null, false);
         if (result && result.email) {
             updateUI(true, result.email);
         } else {
